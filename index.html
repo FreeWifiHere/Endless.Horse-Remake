@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>hooooooooooooooooooooooooooooooooooooooooooooooooooooooooorse</title>
+    <style>
+      :root { color-scheme: light; }
+      html, body { min-height: 100%; }
+      body {
+        margin: 8px;
+        background: #fff;
+        color: #000;
+        font-family: monospace;
+        font-size: 16px;
+        line-height: normal;
+      }
+      #horse {
+        width: 380px;
+        margin: 0 auto;
+        padding-top: 150px;
+      }
+      .intro {
+        margin: 0 0 42px;
+        color: #444;
+        font-family: Georgia, serif;
+        font-size: 14px;
+        line-height: 1.45;
+      }
+      pre {
+        margin: 0;
+        font: inherit;
+        white-space: pre;
+      }
+      @media (max-width: 420px) {
+        #horse { width: 380px; margin-left: max(0px, calc(50vw - 198px)); margin-right: 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="horse" aria-label="An endless ASCII horse">
+      <p class="intro">scroll down there. theres a suprise.</p>
+      <pre>   ,
+    _,,)\.~,,._
+    (()`  ``)\))),,_
+     |     \ ''((\)))),,_          ____
+     |6`   |   ''((\())) "-.____.-"    `-.-,
+     |    .'\    ''))))'                  \)))
+     |   |   `.     ''                     ((((
+     |  /     \/                          |))))
+     \, _)     |                           (((((
+      `'       |                          ((((
+                \                  |       ))))))
+                 `|    |           ,\     /(((((
+                  |   / `-.______.&lt;  \   |  )))))
+                  |   |  /         `. \  \  ((((
+                  |  / \ |           `.\  | (((
+                  \  | | |             )| |  ))
+                   | | | |             || |  '</pre>
+    </main>
+
+    <script>
+      const horse = document.getElementById('horse');
+      const legLine = '        | | | |             || |  ';
+      const linesPerSegment = 18;
+      let loading = false;
+
+      function appendLegs() {
+        const segment = document.createElement('pre');
+        segment.textContent = Array(linesPerSegment).fill(legLine).join('\n') + '\n';
+        horse.appendChild(segment);
+      }
+
+      function keepItEndless() {
+        if (loading) return;
+        const remaining = document.documentElement.scrollHeight - (window.scrollY + window.innerHeight);
+        if (remaining < 2000) {
+          loading = true;
+          appendLegs();
+          requestAnimationFrame(() => { loading = false; keepItEndless(); });
+        }
+      }
+
+      window.addEventListener('scroll', keepItEndless, { passive: true });
+      window.addEventListener('resize', keepItEndless);
+      keepItEndless();
+    </script>
+  </body>
+</html>
